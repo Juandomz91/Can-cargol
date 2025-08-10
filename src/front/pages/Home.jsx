@@ -1,11 +1,11 @@
-// src/App.jsx
 import React from "react";
+import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 
-function Joum() {
+function Home() {
   return (
     <div>
-      <div className="jumbotron text-black bg-light, d-flex, h-80vh, alignItems-center, justifyContent-center" style={{
+      <div className="jumbotron text-black bg-success, d-flex, h-80vh, alignItems-center, justifyContent-center" style={{
 
       }}>
 
@@ -26,7 +26,7 @@ function Joum() {
                   className="img-fixed"
                   alt="Entorno"
                 />
-                <p className="text-center mt-2">Entorno</p>
+                <p className="text-center mt-2 text-dark"><strong>Entorno</strong></p>
               </Link>
             </div>
             <div className="col-md-3">
@@ -36,7 +36,7 @@ function Joum() {
                   className="img-fixed"
                   alt="La casa"
                 />
-                <p className="text-center mt-2">La casa</p>
+                <p className="text-center mt-2 text-dark"><strong>La casa</strong></p>
               </Link>
             </div>
             <div className="col-md-3">
@@ -56,7 +56,7 @@ function Joum() {
                   className="img-fixed"
                   alt="Contacto"
                 />
-                <p className="text-center mt-2">Contacto</p>
+                <p className="text-center mt-2 text-dark"><strong>Contacto</strong></p>
               </Link>
             </div>
           </div>
@@ -69,4 +69,4 @@ function Joum() {
 
 
 
-export default Joum;
+export default Home;
