@@ -3,5 +3,26 @@
   height: 200px; /* o el alto que prefieras */
   object-fit: cover;
   border-radius: 0.5rem; /* opcional, si quieres bordes redondeados */
-  box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.1); /* suave sombra opcional */
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1); /* suave sombra opcional */
+}
+
+/* Estilos para el calendario */
+
+.calendar-panel {
+  font-size: 12px;
+}
+
+.calendar-panel .p-datepicker-calendar td {
+  padding: 0.3rem;
+}
+
+.calendar-panel .p-datepicker-calendar .p-link {
+  width: 2.5rem;
+  height: 2.5rem;
+  line-height: 2.5rem;
+  font-size: 1rem;
+  border-radius: 9999px;
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+  color: aquamarine;
 }
