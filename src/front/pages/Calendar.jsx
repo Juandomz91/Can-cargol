@@ -29,9 +29,8 @@ export default function CalendarPage() {
 
     return (
         <div className="container py-5" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-            <h1 className="display-4">Reservar</h1>
             <p className="lead">Selecciona las fechas disponibles para tu estancia</p>
-            <div className="row" style={{ width: "100%", maxWidth: "400px" }}>
+            <div className="row" style={{ width: "100%", maxWidth: "600px" }}>
                 <div className="col-md-8 offset-md-2" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
                     <PRCalendar
                         inline
@@ -39,7 +38,7 @@ export default function CalendarPage() {
                         value={selectedRange}
                         onChange={(e) => setSelectedRange(e.value)}
                         numberOfMonths={1}
-                        panelClassName="no-border calendar-panel"
+                        className="no-border calendar-panel"
                         dateTemplate={dateTemplate}
                         style={{ width: "100%" }}
                         showButtonBar
@@ -50,6 +49,7 @@ export default function CalendarPage() {
                             Fecha seleccionada: {selectedRange[0].toLocaleDateString()} — {selectedRange[1].toLocaleDateString()}
                         </p>
                     )}
+                    <button>Reservar</button>
                 </div>
             </div>
         </div>

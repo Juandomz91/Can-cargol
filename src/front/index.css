@@ -16,7 +16,7 @@
   padding: 0.3rem;
 }
 
-.calendar-panel .p-datepicker-calendar .p-link {
+.calendar-panel .p-datepicker-calendar td.p-datepicker-today {
   width: 2.5rem;
   height: 2.5rem;
   line-height: 2.5rem;
@@ -24,5 +24,5 @@
   border-radius: 9999px;
   border: 1px solid transparent;
   transition: all 0.2s ease;
-  color: aquamarine;
+  color: rgb(24, 128, 0);
 }

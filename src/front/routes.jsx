@@ -8,14 +8,10 @@ import {
 import { Layout } from "./pages/Layout";
 import { Single } from "./pages/Single";
 import { Demo } from "./pages/Demo";
-<<<<<<< HEAD
-import  Home  from "./pages/Home";
-import Entorno from "./pages/Entorno";
-=======
 import Home from "./pages/Home";
+import Entorno from "./pages/Entorno";
 import CalendarPage from "./pages/Calendar";
 
->>>>>>> ee3dc12 (Creado calendario, falta darle funcionalidad)
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -27,24 +23,13 @@ export const router = createBrowserRouter(
 
     // Root Route: All navigation will start from here.
     <Route path="/" element={<Layout />} errorElement={<h1>Not found!</h1>} >
-
-<<<<<<< HEAD
-        {/* Nested Routes: Defines sub-routes within the BaseHome component. */}
-      <Route index element={<Home />} />
-      <Route path="entorno" element={<Entorno />} />
-      <Route path="/single/:theId" element={ <Single />} />  {/* Dynamic route for single items */}
-      <Route path="/demo" element={<Demo />} />
-
-      </Route>
-    )
-=======
       {/* Nested Routes: Defines sub-routes within the BaseHome component. */}
       <Route index element={<Home />} />
-
-      <Route path="/single/:theId" element={<Single />} />  {/* Dynamic route for single items */}
-      <Route path="/demo" element={<Demo />} />
-      <Route path="/calendario" element={<CalendarPage />} />
+      <Route path="entorno" element={<Entorno />} />
+      <Route path="single/:theId" element={<Single />} />  {/* Dynamic route for single items */}
+      <Route path="demo" element={<Demo />} />
+      <Route path="calendario" element={<CalendarPage />} />
     </Route>
   )
->>>>>>> ee3dc12 (Creado calendario, falta darle funcionalidad)
+
 );
