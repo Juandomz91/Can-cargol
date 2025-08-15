@@ -49,7 +49,7 @@ export default function CalendarPage() {
                             Fecha seleccionada: {selectedRange[0].toLocaleDateString()} — {selectedRange[1].toLocaleDateString()}
                         </p>
                     )}
-                    <button>Reservar</button>
+                    <button id="booking-button">Reservar</button>
                 </div>
             </div>
         </div>

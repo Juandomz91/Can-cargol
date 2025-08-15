@@ -12,17 +12,56 @@
   font-size: 12px;
 }
 
-.calendar-panel .p-datepicker-calendar td {
-  padding: 0.3rem;
+.calendar-panel .p-datepicker-calendar {
+  padding: 0.4rem;
+  table-layout: fixed;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.calendar-panel .p-datepicker-calendar thead th,
+.calendar-panel .p-datepicker-calendar tbody td {
+  padding: 0.4rem;
+  width: calc(100% / 7);
+  text-align: center;
+  vertical-align: middle;
+  box-sizing: border-box;
 }
 
 .calendar-panel .p-datepicker-calendar td.p-datepicker-today {
-  width: 2.5rem;
-  height: 2.5rem;
-  line-height: 2.5rem;
   font-size: 1rem;
-  border-radius: 9999px;
-  border: 1px solid transparent;
-  transition: all 0.2s ease;
-  color: rgb(24, 128, 0);
+  color: green;
+}
+
+.calendar-panel .p-datepicker-buttonbar {
+  padding: 0.5rem 0.75rem;
+  display: flex;
+  gap: 0.5rem;
+  justify-content: space-between;
+  border-radius: 20px;
+}
+
+.calendar-panel .p-datepicker-buttonbar .p-button {
+  padding: 0.5rem 1rem;
+  font-size: 0.3rem;
+  border-radius: 20px;
+  background-color: green;
+  color: white;
+}
+
+.calendar-panel .p-datepicker-header .p-datepicker-prev,
+.calendar-panel .p-datepicker-header .p-datepicker-next {
+  width: 1.5rem;
+  height: 1rem;
+  border-radius: 20px;
+  background-color: green;
+  color: white;
+}
+
+#booking-button {
+  background-color: green;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.6rem;
 }
