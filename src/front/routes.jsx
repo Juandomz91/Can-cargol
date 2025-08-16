@@ -11,6 +11,7 @@ import { Demo } from "./pages/Demo";
 import Home from "./pages/Home";
 import Entorno from "./pages/Entorno";
 import CalendarPage from "./pages/Calendar";
+import Checkout from "./pages/Checkout";
 
 
 export const router = createBrowserRouter(
@@ -29,6 +30,7 @@ export const router = createBrowserRouter(
       <Route path="single/:theId" element={<Single />} />  {/* Dynamic route for single items */}
       <Route path="demo" element={<Demo />} />
       <Route path="calendario" element={<CalendarPage />} />
+      <Route path="checkout" element={<Checkout />} />
     </Route>
   )
 

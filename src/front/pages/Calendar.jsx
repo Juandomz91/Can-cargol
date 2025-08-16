@@ -1,7 +1,9 @@
 import React, { useState, useMemo } from "react";
 import { Calendar as PRCalendar } from "primereact/calendar";
+import { useNavigate } from "react-router-dom";
 
 export default function CalendarPage() {
+    const navigate = useNavigate();
     const [selectedRange, setSelectedRange] = useState(null);
 
     const toMidnight = (d) => (d ? new Date(d.getFullYear(), d.getMonth(), d.getDate()) : null);
@@ -19,13 +21,29 @@ export default function CalendarPage() {
         const isEnd = endMid && currentMid.getTime() === endMid.getTime();
         const isBetween = startMid && endMid && currentMid > startMid && currentMid < endMid;
 
-
-        const style = (isStart || isEnd)
-            ? { textDecoration: "underline", fontWeight: 700 }
+        const style = (isStart || isEnd || isBetween)
+            ? { color: 'green', backgroundColor: "rgb(198, 252, 206)", borderRadius: "5px", fontWeight: 400 }
             : undefined;
-
         return <span style={style}>{date.day}</span>;
     };
+
+    // CONST PARA DERIVACION AL CHECKOUT PAYMENT DE LA RESERVA
+
+    const goToPayment = () => {
+        const [start, end] = Array.isArray(selectedRange) ? selectedRange : [];
+        if (!start || !end) {
+            alert("Por favor, selecciona un rango de fechas válido.");
+            return;
+        }
+        navigate("/checkout", {
+            state: {
+                startDate: selectedRange[0].toISOString(),
+                endDate: selectedRange[1].toISOString()
+            }
+        });
+    };
+
+    // END CONST PARA DERIVACION AL CHECKOUT PAYMENT DE LA RESERVA
 
     return (
         <div className="container py-5" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
@@ -49,7 +67,7 @@ export default function CalendarPage() {
                             Fecha seleccionada: {selectedRange[0].toLocaleDateString()} — {selectedRange[1].toLocaleDateString()}
                         </p>
                     )}
-                    <button id="booking-button">Reservar</button>
+                    <button id="booking-button" onClick={goToPayment}>Reservar</button>
                 </div>
             </div>
         </div>
