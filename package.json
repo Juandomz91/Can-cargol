@@ -54,6 +54,7 @@
 		]
 	},
 	"dependencies": {
+		"@stripe/stripe-js": "^7.8.0",
 		"primeicons": "^7.0.0",
 		"primereact": "^10.9.6",
 		"prop-types": "^15.8.1",
