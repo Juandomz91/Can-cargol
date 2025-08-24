@@ -8,8 +8,8 @@ function Entorno() {
       imagen: "https://imgs.search.brave.com/yyXLtRrktqvGWyhq4D-q4aYKiHPsP0vJ1fdn9YX4lRk/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/dmllc3ZlcmRlcy5j/YXQvd3AtY29udGVu/dC91cGxvYWRzLzIw/MTcvMTIvRFNDMjk4/Ni5qcGc"
     },
     {
-      nombre: "Río y cascadas",
-      descripcion: "Te ríes y te la cascas.",
+      nombre: "Gorgs",
+      descripcion: "Lugares de ensueño, escondidos, que vale la pena descubrir y cuidar.",
       imagen: "https://imgs.search.brave.com/Sh8wpy8V66au0X4moox5VgJZQsf3_N6AwptRbS-lJFs/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS1jZG4udHJpcGFk/dmlzb3IuY29tL21l/ZGlhL3Bob3RvLW8v/MGUvN2MvODUvZmMv/Z29yZy1kZWwtbW9s/aS1kZWwtbXVycmlz/LmpwZw"
     },
     {
@@ -20,7 +20,7 @@ function Entorno() {
     {
       nombre: "Costa Brava",
       descripcion: "Roca, arena y sal. A 45 minutos en coche se encuentra una joya mediterránea. Conocida por la rica biodiversidad que la compone y por sus aguas cristalinas. ",
-      imagen: "URL_DE_IMAGEN_4"
+      imagen: "https://imgs.search.brave.com/BCnzyE0OLwIp4wIZdyGQIAdYnF5PWwtRDhQczD6oapY/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly90NC5m/dGNkbi5uZXQvanBn/LzAzLzc4LzkxLzE3/LzM2MF9GXzM3ODkx/MTc0NF9peDNybllJ/b1dUalNpcDhDTHhT/ZHdqS09BcHhsRkpX/by5qcGc"
     }
   ];
 
