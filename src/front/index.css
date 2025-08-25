@@ -69,10 +69,11 @@
 /* Estilos para el diálogo de checkout */
 
 .dialogo-checkout {
-  background-color: green;
+  background-color: rgb(255, 255, 255);
   padding: 15px;
   border-radius: 20px;
-  color: white;
+  color: rgb(3, 3, 3);
   font-size: 0.8rem;
   scrollbar-color: green white;
+  border: green 2px solid;
 }
