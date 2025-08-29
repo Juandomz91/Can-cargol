@@ -79,7 +79,7 @@ export default function Checkout() {
     // Verificar el estado del pago con el backend
     const verificarPago = async (sessionId) => {
         try {
-            const response = await fetch(`http://localhost:5000/api/verify-payment/${sessionId}`);
+            const response = await fetch(`http://localhost:3001/api/verify-payment/${sessionId}`);
             const data = await response.json();
 
             if (data.success) {
@@ -115,7 +115,7 @@ export default function Checkout() {
         setPagoEnProceso(true);
 
         try {
-            const response = await fetch("http://localhost:5000/api/create-checkout-session", {
+            const response = await fetch("http://localhost:3001/api/create-checkout-session", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -148,7 +148,7 @@ export default function Checkout() {
     // Simular decisión del propietario (demo)
     const simularDecisionPropietario = async (aprobar) => {
         try {
-            const response = await fetch("http://localhost:5000/api/owner-decision", {
+            const response = await fetch("http://localhost:3001/api/owner-decision", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -251,6 +251,7 @@ export default function Checkout() {
                             label="Volver al Calendario"
                             className="p-button-secondary"
                             onClick={() => navigate('/calendario')}
+                            style={{ borderRadius: '20px', backgroundColor: 'green' }}
                         />
                     </div>
                 </div>
@@ -348,6 +349,7 @@ export default function Checkout() {
                             className="p-button-secondary me-2"
                             onClick={() => navigate('/calendario')}
                             disabled={pagoEnProceso}
+                            style={{ borderRadius: '20px', backgroundColor: 'green', marginBottom: '5px' }}
                         />
                         <Button
                             label={pagoEnProceso ? "Redirigiendo a Stripe..." : "Pagar con Stripe"}
@@ -355,6 +357,7 @@ export default function Checkout() {
                             onClick={procesarPago}
                             disabled={!formularioValido() || pagoEnProceso}
                             loading={pagoEnProceso}
+                            style={{ borderRadius: '20px', backgroundColor: 'green', marginBottom: '5px' }}
                         />
                     </div>
                 </div>
