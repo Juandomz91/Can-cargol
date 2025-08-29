@@ -3,5 +3,76 @@
   height: 200px; /* o el alto que prefieras */
   object-fit: cover;
   border-radius: 0.5rem; /* opcional, si quieres bordes redondeados */
-  box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.1); /* suave sombra opcional */
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1); /* suave sombra opcional */
+}
+
+/* Estilos para el calendario */
+
+.calendar-panel {
+  font-size: 12px;
+}
+
+.calendar-panel .p-datepicker-calendar {
+  padding: 0.4rem;
+  table-layout: fixed;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.calendar-panel .p-datepicker-calendar thead th,
+.calendar-panel .p-datepicker-calendar tbody td {
+  padding: 0.4rem;
+  width: calc(100% / 7);
+  text-align: center;
+  vertical-align: middle;
+  box-sizing: border-box;
+}
+
+.calendar-panel .p-datepicker-calendar td.p-datepicker-today {
+  font-size: 1rem;
+  color: green;
+}
+
+.calendar-panel .p-datepicker-buttonbar {
+  padding: 0.5rem 0.75rem;
+  display: flex;
+  gap: 0.5rem;
+  justify-content: space-between;
+  border-radius: 20px;
+}
+
+.calendar-panel .p-datepicker-buttonbar .p-button {
+  padding: 0.5rem 1rem;
+  font-size: 0.3rem;
+  border-radius: 20px;
+  background-color: green;
+  color: white;
+}
+
+.calendar-panel .p-datepicker-header .p-datepicker-prev,
+.calendar-panel .p-datepicker-header .p-datepicker-next {
+  width: 1.5rem;
+  height: 1rem;
+  border-radius: 20px;
+  background-color: green;
+  color: white;
+}
+
+#booking-button {
+  background-color: green;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.6rem;
+}
+
+/* Estilos para el diálogo de checkout */
+
+.dialogo-checkout {
+  background-color: green;
+  padding: 15px;
+  border-radius: 20px;
+  color: white;
+  font-size: 0.8rem;
+  scrollbar-color: green white;
 }
