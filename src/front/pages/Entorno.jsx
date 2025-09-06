@@ -1,42 +1,58 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
 import Masonry from '@mui/lab/Masonry';
 import { styled } from '@mui/material/styles';
 
-const Label = styled(Paper)(({ theme }) => ({
-  backgroundColor: '#fff',
-  ...theme.typography.body2,
-  padding: theme.spacing(0.5),
+const ImageWrapper = styled('div')({
+  position: 'relative',
+  overflow: 'hidden',
+  borderRadius: 4,
+  cursor: 'pointer',
+  '& img': {
+    width: '100%',
+    display: 'block',
+    transition: 'transform 0.3s ease',
+  },
+  '&:hover img': {
+    transform: 'scale(1.05)',
+  },
+  '&:hover .titleOverlay': {
+    opacity: 1,
+  },
+});
+
+const TitleOverlay = styled('div')({
+  position: 'absolute',
+  bottom: 0,
+  left: 0,
+  right: 0,
+  background: 'rgba(0,0,0,0.6)',
+  color: 'white',
+  padding: '0.5rem',
   textAlign: 'center',
-  color: (theme.vars || theme).palette.text.secondary,
-  borderBottomLeftRadius: 0,
-  borderBottomRightRadius: 0,
-  ...(theme.palette.mode === 'dark' && {
-    backgroundColor: '#1A2027',
-  }),
-}));
+  fontSize: '0.9rem',
+  fontWeight: 'bold',
+  opacity: 0,
+  transition: 'opacity 0.3s ease',
+  pointerEvents: 'none',
+});
 
 export default function ImageMasonry() {
   return (
-    <Box sx={{ width: 500, minHeight: 829 }}>
-      <Masonry columns={3} spacing={2}>
+    <Box
+      sx={{
+        display: 'flex',
+        justifyContent: 'center', 
+        alignItems: 'center',
+        minHeight: 1000,
+      }}
+    >
+      <Masonry columns={3} spacing={1} sx={{ width: 800 }}>
         {itemData.map((item, index) => (
-          <div key={index}>
-            <Label>{index + 1}</Label>
-            <img
-              srcSet={`${item.img}?w=162&auto=format&dpr=2 2x`}
-              src={`${item.img}?w=162&auto=format`}
-              alt={item.title}
-              loading="lazy"
-              style={{
-                borderBottomLeftRadius: 4,
-                borderBottomRightRadius: 4,
-                display: 'block',
-                width: '100%',
-              }}
-            />
-          </div>
+          <ImageWrapper key={index}>
+            <img src={item.img} alt={item.title} />
+            <TitleOverlay className="titleOverlay">{item.title}</TitleOverlay>
+          </ImageWrapper>
         ))}
       </Masonry>
     </Box>
@@ -45,14 +61,19 @@ export default function ImageMasonry() {
 
 const itemData = [
   {
-    img: 'https://images.unsplash.com/photo-1518756131217-31eb79b20e8f',
-    title: 'Fern',
+    img: 'https://as1.ftcdn.net/jpg/00/59/41/92/1000_F_59419298_0VXsGZLAunN7rk7yDVUVmEWXnc6SiCNY.jpg',
+    title: 'Veïnat de Sant climent'
   },
   {
-    img: 'https://images.unsplash.com/photo-1627308595229-7830a5c91f9f',
-    title: 'Snacks',
+    img: 'https://media-cdn.tripadvisor.com/media/photo-s/04/4c/dd/e2/bicicarril.jpg',
+    title: 'Rutes en bici',
   },
   {
-    img: 'https://images.unsplash.com/photo-1597645587822-e99fa5d45d25',
-    title: 'Mushrooms',
-  },]
+    img: 'https://valldamer.cat/wp-content/uploads/2018/09/ermita-santa-brigida-amer.jpg',
+    title: 'Ermita de Sta.Brígida',
+  },
+  {
+    img: 'https://es.turismegarrotxa.com/img-apartat-3200-1800/a-45580_001.jpg',
+    title: 'Els volcans de la Garrotxa'
+  }
+];
