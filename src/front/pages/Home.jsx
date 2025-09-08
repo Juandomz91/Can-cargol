@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 function Home() {
   return (
     <div>
-      <div className="jumbotron text-black bg-success, d-flex, h-80vh, alignItems-center, justifyContent-center" style={{
+      <div className="jumbotron text-black  d-flex, h-80vh alignItems-center justifyContent-center" style={{
 
       }}>
 

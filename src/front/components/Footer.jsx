@@ -1,10 +1,25 @@
-export const Footer = () => (
-	<footer className="footer mt-auto py-3 text-center bg-success">
-		<p>
-			Check the <a target="_blank" href="https://4geeks.com/docs/start/react-flask-template">template documentation</a> <i className="fa-solid fa-file"></i> for help.
-		</p>
-		<p>
-		Lorem ipsum dolor estLorem ipsum dolor estLorem ipsum dolor estLorem ipsum dolor estLorem ipsum dolor estLorem ipsum dolor est
-		</p>
-	</footer>
-);
+export const Footer = () => {
+  const footerStyle = {
+    backgroundColor: '#596c0eff', // mismo verde que el navbar
+    color: 'white',
+    padding: '1rem 1rem',
+    textAlign: 'center'
+  };
+
+  const linkStyle = {
+    color: 'white',
+    textDecoration: 'underline'
+  };
+
+  return (
+    <footer style={footerStyle}>
+      <p>
+        Can cargol, casa de repós. <br></br>
+        Telèfon: +34 622 584 002
+      </p>
+      <p>
+        Lorem ipsum dolor est Lorem ipsum dolor est Lorem ipsum dolor est Lorem ipsum dolor est Lorem ipsum dolor est Lorem ipsum dolor est
+      </p>
+    </footer>
+  );
+};

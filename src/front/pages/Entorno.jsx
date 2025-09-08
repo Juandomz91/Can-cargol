@@ -1,57 +1,86 @@
-import React from "react";
 
-function Entorno() {
-  const lugares = [
-    {
-      nombre: "Bicicarril",
-      descripcion: "Una ruta muy cómoda y facil de hacer con un desnivel muy poco pronunciado para subir, pero suficiente para bajar sin esfuerzo.",
-      imagen: "https://imgs.search.brave.com/yyXLtRrktqvGWyhq4D-q4aYKiHPsP0vJ1fdn9YX4lRk/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/dmllc3ZlcmRlcy5j/YXQvd3AtY29udGVu/dC91cGxvYWRzLzIw/MTcvMTIvRFNDMjk4/Ni5qcGc"
-    },
-    {
-      nombre: "Río y cascadas",
-      descripcion: "Te ríes y te la cascas.",
-      imagen: "https://imgs.search.brave.com/Sh8wpy8V66au0X4moox5VgJZQsf3_N6AwptRbS-lJFs/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS1jZG4udHJpcGFk/dmlzb3IuY29tL21l/ZGlhL3Bob3RvLW8v/MGUvN2MvODUvZmMv/Z29yZy1kZWwtbW9s/aS1kZWwtbXVycmlz/LmpwZw"
-    },
-    {
-      nombre: "Olot y sus volcanes dormidos",
-      descripcion: "Inacabables, descubre la atmosfera íntima que puedes vivir en ellos, date un paseo por la hayeda d'en Jordà",
-      imagen: "https://imgs.search.brave.com/gcN7B_oPZYrKAFFxPg_1CqpWbtdRw0_o-5mgyngvNkg/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9wYXRy/aW1vbmkuZ2Fycm90/eGEuY2F0L3dwLWNv/bnRlbnQvdXBsb2Fk/cy8yMDIzLzExL2Vs/c192b2xjYW5zX29s/b3QtbWluLXNjYWxl/ZC5qcGc"
-    },
-    {
-      nombre: "Costa Brava",
-      descripcion: "Roca, arena y sal. A 45 minutos en coche se encuentra una joya mediterránea. Conocida por la rica biodiversidad que la compone y por sus aguas cristalinas. ",
-      imagen: "URL_DE_IMAGEN_4"
-    }
-  ];
+import Box from '@mui/material/Box';
+import Masonry from '@mui/lab/Masonry';
+import { styled } from '@mui/material/styles';
 
+const ImageWrapper = styled('div')({
+  position: 'relative',
+  overflow: 'hidden',
+  borderRadius: 4,
+  cursor: 'pointer',
+  '& img': {
+    width: '100%',
+    display: 'block',
+    transition: 'transform 0.3s ease',
+  },
+  '&:hover img': {
+    transform: 'scale(1.15)',
+  },
+  '&:hover .titleOverlay': {
+    opacity: 1,
+  },
+});
+
+const TitleOverlay = styled('div')({
+  position: 'absolute',
+  bottom: 0,
+  left: 0,
+  right: 0,
+  background: 'rgba(0,0,0,0.6)',
+  color: 'white',
+  padding: '0.5rem',
+  textAlign: 'center',
+  fontSize: '0.9rem',
+  fontWeight: 'bold',
+  opacity: 0,
+  transition: 'opacity 0.3s ease',
+  pointerEvents: 'none',
+});
+
+export default function ImageMasonry() {
   return (
-    <div className="container py-5">
-      <h1 className="text-center mb-5">Descubre el Entorno</h1>
-      <div className="row">
-        {lugares.map((lugar, index) => (
-          <div key={index} className="col-md-6 col-lg-4 mb-4">
-            <div className="card h-100 shadow-sm">
-              <img
-                src={lugar.imagen}
-                className="card-img-top"
-                alt={lugar.nombre}
-                style={{ height: "250px", objectFit: "cover" }}
-              />
-              <div className="card-body">
-                <h5 className="card-title">{lugar.nombre}</h5>
-                <p className="card-text">{lugar.descripcion}</p>
-              </div>
-            </div>
-          </div>
+    <Box
+      sx={{
+        display: 'flex',
+        justifyContent: 'center', 
+        alignItems: 'center',
+        minHeight: 1000,
+        //imagen de fondo
+        backgroundColor: '#ffffffff',
+        
+      }}
+    >
+      <Masonry columns={3} spacing={1} sx={{ width: 800 }}>
+        {itemData.map((item, index) => (
+          <ImageWrapper key={index}>
+            <img src={item.img} alt={item.title} />
+            <TitleOverlay className="titleOverlay">{item.title}</TitleOverlay>
+          </ImageWrapper>
         ))}
-      </div>
-      <div className="text-center mt-5">
-        <a href="/calendario" className="btn btn-success btn-lg">
-          Reserva tu estancia y vive esta experiencia
-        </a>
-      </div>
-    </div>
+      </Masonry>
+    </Box>
   );
 }
 
-export default Entorno;
+const itemData = [
+  {
+    img: 'https://as1.ftcdn.net/jpg/00/59/41/92/1000_F_59419298_0VXsGZLAunN7rk7yDVUVmEWXnc6SiCNY.jpg',
+    title: 'Veïnat de Sant climent'
+  },
+  {
+    img: 'https://media-cdn.tripadvisor.com/media/photo-s/04/4c/dd/e2/bicicarril.jpg',
+    title: 'Rutes en bici',
+  },
+  {
+    img: 'https://valldamer.cat/wp-content/uploads/2018/09/ermita-santa-brigida-amer.jpg',
+    title: 'Ermita de Sta.Brígida',
+  },
+  {
+    img: 'https://es.turismegarrotxa.com/img-apartat-3200-1800/a-45580_001.jpg',
+    title: 'Els volcans de la Garrotxa'
+  },
+  {
+    img: 'https://imagenes.elpais.com/resizer/v2/WSSRESHU2NGQBGA3LFUUMAK3WA.jpg?auth=fc26b5dcb255f9fb4c5f7caf0e24c964f5ea33911386e213e0e7edfb06848de0&width=980&height=980&smart=true',
+    title: 'Cingle el Far'
+  }
+];
