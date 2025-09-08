@@ -1,4 +1,4 @@
-import * as React from 'react';
+
 import Box from '@mui/material/Box';
 import Masonry from '@mui/lab/Masonry';
 import { styled } from '@mui/material/styles';
@@ -14,7 +14,7 @@ const ImageWrapper = styled('div')({
     transition: 'transform 0.3s ease',
   },
   '&:hover img': {
-    transform: 'scale(1.05)',
+    transform: 'scale(1.15)',
   },
   '&:hover .titleOverlay': {
     opacity: 1,
@@ -45,6 +45,11 @@ export default function ImageMasonry() {
         justifyContent: 'center', 
         alignItems: 'center',
         minHeight: 1000,
+        //imagen de fondo
+        //backgroundImage: 'url()',
+       // backgroundSize: 'cover',
+        //backgroundPosition: 'center',
+       // backgroundRepeat: 'no-repeat',
       }}
     >
       <Masonry columns={3} spacing={1} sx={{ width: 800 }}>
@@ -75,5 +80,9 @@ const itemData = [
   {
     img: 'https://es.turismegarrotxa.com/img-apartat-3200-1800/a-45580_001.jpg',
     title: 'Els volcans de la Garrotxa'
+  },
+  {
+    img: 'https://imagenes.elpais.com/resizer/v2/WSSRESHU2NGQBGA3LFUUMAK3WA.jpg?auth=fc26b5dcb255f9fb4c5f7caf0e24c964f5ea33911386e213e0e7edfb06848de0&width=980&height=980&smart=true',
+    title: 'Cingle el Far'
   }
 ];
