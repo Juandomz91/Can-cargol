@@ -14,16 +14,8 @@ export const Footer = () => {
   return (
     <footer style={footerStyle}>
       <p>
-        Check the{' '}
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          href="https://4geeks.com/docs/start/react-flask-template"
-          style={linkStyle}
-        >
-          template documentation
-        </a>{' '}
-        <i className="fa-solid fa-file"></i> for help.
+        Can cargol, casa de repós. <br></br>
+        Telèfon: +34 622 584 002
       </p>
       <p>
         Lorem ipsum dolor est Lorem ipsum dolor est Lorem ipsum dolor est Lorem ipsum dolor est Lorem ipsum dolor est Lorem ipsum dolor est

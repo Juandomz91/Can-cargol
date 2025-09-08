@@ -46,10 +46,8 @@ export default function ImageMasonry() {
         alignItems: 'center',
         minHeight: 1000,
         //imagen de fondo
-        //backgroundImage: 'url()',
-       // backgroundSize: 'cover',
-        //backgroundPosition: 'center',
-       // backgroundRepeat: 'no-repeat',
+        backgroundColor: '#ffffffff',
+        
       }}
     >
       <Masonry columns={3} spacing={1} sx={{ width: 800 }}>
