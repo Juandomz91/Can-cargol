@@ -11,6 +11,8 @@ import { Demo } from "./pages/Demo";
 import Home from "./pages/Home";
 import CalendarPage from "./pages/Calendario";
 import Checkout from "./pages/Checkout";
+import { ContactForm } from "./pages/Contacto";
+import Entorno from "./pages/Entorno";
 
 
 
@@ -31,6 +33,8 @@ export const router = createBrowserRouter(
 
       <Route path="/calendario" element={<CalendarPage />} />
       <Route path="/checkout" element={<Checkout />} />
+      <Route path="/entorno" element={< Entorno/>} />
+      <Route path="/contacto" element={<ContactForm />} />
       <Route path="/single/:theId" element={<Single />} />  {/* Dynamic route for single items */}
       <Route path="/demo" element={<Demo />} />
 
