@@ -13,6 +13,7 @@ import CalendarPage from "./pages/Calendario";
 import Checkout from "./pages/Checkout";
 import { ContactForm } from "./pages/Contacto";
 import Entorno from "./pages/Entorno";
+import Estancia from"./pages/Estancia";
 
 
 
@@ -30,10 +31,10 @@ export const router = createBrowserRouter(
 
       {/* Nested Routes: Defines sub-routes within the BaseHome component. */}
       <Route index element={<Home />} />
-
       <Route path="/calendario" element={<CalendarPage />} />
       <Route path="/checkout" element={<Checkout />} />
       <Route path="/entorno" element={< Entorno/>} />
+      <Route path="/estancia" element={<Estancia/>} />
       <Route path="/contacto" element={<ContactForm />} />
       <Route path="/single/:theId" element={<Single />} />  {/* Dynamic route for single items */}
       <Route path="/demo" element={<Demo />} />

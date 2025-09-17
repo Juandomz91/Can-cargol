@@ -43,7 +43,7 @@ const ImageWrapper = styled("div")({
   },
 });
 
-export default function Entorno() {
+export default function Estancia() {
   return (
     <Box
       sx={{
