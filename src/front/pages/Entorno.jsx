@@ -4,7 +4,7 @@ import { styled } from "@mui/material/styles";
 import Masonry from "@mui/lab/Masonry";
 
 const images = [
-  { src: "https://picsum.photos/300/200?1", title: "Imagen 1" },
+  { src: "https://cf.bstatic.com/xdata/images/hotel/max1024x768/578583960.jpg?k=b62e764b5292d397ed8a6bd5e647bb3ee8e0acc84cc635da78a90f7547af68bb&o=", title: "Can Cargol" },
   { src: "https://picsum.photos/300/250?2", title: "Imagen 2" },
   { src: "https://picsum.photos/300/180?3", title: "Imagen 3" },
   { src: "https://picsum.photos/300/220?4", title: "Imagen 4" },
@@ -55,7 +55,8 @@ export default function Entorno() {
         p: 2,
       }}
     >
-      <Box sx={{ width: 600 }}>
+      <Box sx={{ width: '100%', maxWidth: 1200, mx: 'auto' }}>
+
         <Masonry columns={{ xs: 1, sm: 2, md: 3 }} spacing={2}>
           {images.map((item, index) => (
             <ImageWrapper key={index}>
