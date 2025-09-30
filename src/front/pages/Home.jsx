@@ -8,7 +8,7 @@ function Home() {
       <div className="jumbotron text-black d-flex align-items-center justify-content-center" style={{ minHeight: "80vh" }}>
         <div className="text-center container" style={{ maxWidth: "1000px" }}>
           <img 
-            src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/202121894.jpg?k=d8aab19fe36b288c9a69ccb2d5fb00b179b2cba21f21c70a45a17f92aa3e0124&o=" 
+            src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/578583960.jpg?k=b62e764b5292d397ed8a6bd5e647bb3ee8e0acc84cc635da78a90f7547af68bb&o="
             className="img-fluid rounded mb-4"
             alt="Hotel Can Cargol"
           />

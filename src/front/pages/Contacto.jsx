@@ -15,12 +15,33 @@ export const ContactForm = () => {
     });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Datos enviados:", formData);
-    alert("¡Gracias por contactarnos! Te responderemos pronto.");
-    setFormData({ nombre: "", email: "", telefono: "", mensaje: "" });
-  };
+
+ const handleSubmit = async (e) => {
+  e.preventDefault();
+  
+  try {
+    const response = await fetch('http://localhost:5000/send-email', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    });
+    
+    const result = await response.json();
+    
+    if (result.success) {
+      alert("¡Gracias por contactarnos! Te responderemos pronto.");
+      setFormData({ nombre: "", email: "", telefono: "", mensaje: "" });
+    } else {
+      alert("Error al enviar el mensaje. Inténtalo de nuevo.");
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    alert("Error de conexión. Inténtalo de nuevo.");
+  }
+}; 
+
 
   return (
     <div className="container mt-5">

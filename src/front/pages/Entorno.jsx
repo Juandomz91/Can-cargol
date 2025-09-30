@@ -5,10 +5,10 @@ import Masonry from "@mui/lab/Masonry";
 
 const images = [
   { src: "https://cf.bstatic.com/xdata/images/hotel/max1024x768/578583960.jpg?k=b62e764b5292d397ed8a6bd5e647bb3ee8e0acc84cc635da78a90f7547af68bb&o=", title: "Can Cargol" },
-  { src: "https://picsum.photos/300/250?2", title: "Imagen 2" },
-  { src: "https://picsum.photos/300/180?3", title: "Imagen 3" },
-  { src: "https://picsum.photos/300/220?4", title: "Imagen 4" },
-  { src: "https://picsum.photos/300/210?5", title: "Imagen 5" },
+  { src: "https://a0.muscache.com/im/pictures/airflow/Hosting-12658797/original/19023c73-9939-4795-93d2-6567aaafe947.jpg?im_w=1200", title: "Imagen 2" },
+  { src: "https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MTI2NTg3OTc%3D/original/6e653096-9431-45cc-b596-08a0b25852cc.jpeg?im_w=720", title: "Imagen 3" },
+  { src: "https://a0.muscache.com/im/pictures/airflow/Hosting-12658797/original/fbec7848-26a2-4f7a-92ad-fa76dbd42cea.jpg?im_w=720", title: "Imagen 4" },
+  { src: "https://a0.muscache.com/im/pictures/airflow/Hosting-12658797/original/5e8e53cf-f340-4699-91be-c20edb974448.jpg?im_w=720", title: "Imagen 5" },
   { src: "https://picsum.photos/300/260?6", title: "Imagen 6" },
 ];
 
