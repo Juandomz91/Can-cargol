@@ -52,7 +52,7 @@ const ImageWrapper = styled("div")({
 });
 
 export default function Estancia() {
-  // ✅ El hook useState debe estar DENTRO del componente
+  
   const [selectedImage, setSelectedImage] = useState(null);
 
   return (
@@ -82,7 +82,7 @@ export default function Estancia() {
         </Box>
       </Box>
 
-      {/* ✅ Modal dentro del return pero fuera del Box principal */}
+      {/*  Modal fuera del Box principal */}
       {selectedImage && (
         <div 
           style={{
