@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState } from "react";
 import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 import Masonry from "@mui/lab/Masonry";
@@ -17,11 +18,6 @@ const images = [
   { src: "https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MTI2NTg3OTc=/original/09379acc-a4f3-431d-974e-71448f66f22a.jpeg?im_w=1200", title: "Imagen 11" },
   { src: "https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MTI2NTg3OTc=/original/9fc793bd-450c-4062-9c18-f7764bc687f3.jpeg?im_w=720", title: "Imagen 12" },
   { src: "https://cf.bstatic.com/xdata/images/hotel/max1024x768/202121894.jpg?k=d8aab19fe36b288c9a69ccb2d5fb00b179b2cba21f21c70a45a17f92aa3e0124&o=&hp=1", title: "Imagen 13" },
-  { src: "https://cf.bstatic.com/xdata/images/hotel/max1024x768/202121894.jpg?k=d8aab19fe36b288c9a69ccb2d5fb00b179b2cba21f21c70a45a17f92aa3e0124&o=&hp=1", title: "Imagen 14" },
-
-
-
-
 ];
 
 const ImageWrapper = styled("div")({
@@ -56,28 +52,82 @@ const ImageWrapper = styled("div")({
 });
 
 export default function Estancia() {
-  return (
-    <Box
-      sx={{
-        width: "100%",
-        minHeight: "100vh",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        p: 2,
-      }}
-    >
-      <Box sx={{ width: '100%', maxWidth: 1200, mx: 'auto' }}>
+  // ✅ El hook useState debe estar DENTRO del componente
+  const [selectedImage, setSelectedImage] = useState(null);
 
-        <Masonry columns={{ xs: 1, sm: 2, md: 3 }} spacing={2}>
-          {images.map((item, index) => (
-            <ImageWrapper key={index}>
-              <img src={item.src} alt={item.title} />
-              <div className="overlay">{item.title}</div>
-            </ImageWrapper>
-          ))}
-        </Masonry>
+  return (
+    <>
+      <Box
+        sx={{
+          width: "100%",
+          minHeight: "100vh",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          p: 2,
+        }}
+      >
+        <Box sx={{ width: '100%', maxWidth: 1200, mx: 'auto' }}>
+          <Masonry columns={{ xs: 1, sm: 2, md: 3 }} spacing={2}>
+            {images.map((item, index) => (
+              <ImageWrapper 
+                key={index}
+                onClick={() => setSelectedImage(item.src)} // ✅ Añadido onClick
+              >
+                <img src={item.src} alt={item.title} />
+                <div className="overlay">{item.title}</div>
+              </ImageWrapper>
+            ))}
+          </Masonry>
+        </Box>
       </Box>
-    </Box>
+
+      {/* ✅ Modal dentro del return pero fuera del Box principal */}
+      {selectedImage && (
+        <div 
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: 'rgba(0,0,0,0.9)',
+            zIndex: 9999,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '16px'
+          }}
+          onClick={() => setSelectedImage(null)}
+        >
+          <img 
+            src={selectedImage} 
+            alt="Imagen ampliada"
+            style={{
+              maxWidth: '100%',
+              maxHeight: '100%',
+              objectFit: 'contain'
+            }}
+            onClick={(e) => e.stopPropagation()}
+          />
+          <button 
+            style={{
+              position: 'absolute',
+              top: '16px',
+              right: '16px',
+              background: 'none',
+              border: 'none',
+              color: 'white',
+              fontSize: '48px',
+              cursor: 'pointer',
+              lineHeight: 1
+            }}
+            onClick={() => setSelectedImage(null)}
+          >
+            ×
+          </button>
+        </div>
+      )}
+    </>
   );
 }

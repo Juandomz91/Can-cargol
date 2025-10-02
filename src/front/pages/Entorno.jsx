@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState } from "react";
 import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 import Masonry from "@mui/lab/Masonry";
@@ -44,28 +45,83 @@ const ImageWrapper = styled("div")({
 });
 
 export default function Entorno() {
-  return (
-    <Box
-      sx={{
-        width: "100%",
-        minHeight: "100vh",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        p: 2,
-      }}
-    >
-      <Box sx={{ width: '100%', maxWidth: 1200, mx: 'auto' }}>
+  // ✅ Estado para controlar qué imagen está ampliada
+  const [selectedImage, setSelectedImage] = useState(null);
 
-        <Masonry columns={{ xs: 1, sm: 2, md: 3 }} spacing={2}>
-          {images.map((item, index) => (
-            <ImageWrapper key={index}>
-              <img src={item.src} alt={item.title} />
-              <div className="overlay">{item.title}</div>
-            </ImageWrapper>
-          ))}
-        </Masonry>
+  return (
+    <>
+      <Box
+        sx={{
+          width: "100%",
+          minHeight: "100vh",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          p: 2,
+        }}
+      >
+        <Box sx={{ width: '100%', maxWidth: 1200, mx: 'auto' }}>
+          <Masonry columns={{ xs: 1, sm: 2, md: 3 }} spacing={2}>
+            {images.map((item, index) => (
+              <ImageWrapper 
+                key={index}
+                onClick={() => setSelectedImage(item.src)} // ✅ Al hacer clic, guardamos la imagen
+              >
+                <img src={item.src} alt={item.title} />
+                <div className="overlay">{item.title}</div>
+              </ImageWrapper>
+            ))}
+          </Masonry>
+        </Box>
       </Box>
-    </Box>
+
+      {/* ✅ Modal para mostrar la imagen ampliada */}
+      {selectedImage && (
+        <div 
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: 'rgba(0,0,0,0.9)',
+            zIndex: 9999,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '16px'
+          }}
+          onClick={() => setSelectedImage(null)} // ✅ Cerrar al hacer clic en el fondo
+        >
+          <img 
+            src={selectedImage} 
+            alt="Imagen ampliada"
+            style={{
+              maxWidth: '100%',
+              maxHeight: '100%',
+              objectFit: 'contain'
+            }}
+            onClick={(e) => e.stopPropagation()} // ✅ Evita cerrar al clicar la imagen
+          />
+          <button 
+            style={{
+              position: 'absolute',
+              top: '16px',
+              right: '16px',
+              background: 'none',
+              border: 'none',
+              color: 'white',
+              fontSize: '48px',
+              cursor: 'pointer',
+              lineHeight: 1,
+              fontWeight: 'bold'
+            }}
+            onClick={() => setSelectedImage(null)} // ✅ Cerrar con el botón X
+          >
+            ×
+          </button>
+        </div>
+      )}
+    </>
   );
 }
