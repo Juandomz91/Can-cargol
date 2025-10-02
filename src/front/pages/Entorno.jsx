@@ -6,11 +6,11 @@ import Masonry from "@mui/lab/Masonry";
 
 const images = [
   { src: "https://cf.bstatic.com/xdata/images/hotel/max1024x768/578583960.jpg?k=b62e764b5292d397ed8a6bd5e647bb3ee8e0acc84cc635da78a90f7547af68bb&o=", title: "Can Cargol" },
-  { src: "https://a0.muscache.com/im/pictures/airflow/Hosting-12658797/original/19023c73-9939-4795-93d2-6567aaafe947.jpg?im_w=1200", title: "Imagen 2" },
-  { src: "https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MTI2NTg3OTc%3D/original/6e653096-9431-45cc-b596-08a0b25852cc.jpeg?im_w=720", title: "Imagen 3" },
-  { src: "https://a0.muscache.com/im/pictures/airflow/Hosting-12658797/original/fbec7848-26a2-4f7a-92ad-fa76dbd42cea.jpg?im_w=720", title: "Imagen 4" },
-  { src: "https://a0.muscache.com/im/pictures/airflow/Hosting-12658797/original/5e8e53cf-f340-4699-91be-c20edb974448.jpg?im_w=720", title: "Imagen 5" },
-  { src: "https://picsum.photos/300/260?6", title: "Imagen 6" },
+  { src: "https://imgs.search.brave.com/3lNL2b0YjFFnMhJIAU05UUzOak7rvoNnS1_HBT8VKZc/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/c2Vlbi5kZS9zZWVu/X2RiL3N0YXRpYy9p/bWcvaGVhZGVyL3Nl/ZW4uanBn", title: "Pantà de Susqueda" },
+  { src: "https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MTI2NTg3OTc%3D/original/6e653096-9431-45cc-b596-08a0b25852cc.jpeg?im_w=720", title: "Can Cargol" },
+  { src: "https://imgs.search.brave.com/U9BXZYYMR5COEFRU4dvn5_vQ1w9gwIpYWhyoZKATiqM/rs:fit:860:0:0:0/g:ce/aHR0cDovL3ZhbGxk/YW1lci5jYXQvd3At/Y29udGVudC91cGxv/YWRzLzIwMTgvMDkv/ZXJtaXRhLXNhbnRh/LWJyaWdpZGEtYW1l/ci0yLmpwZw", title: "Sta. Brígida" },
+  { src: "https://imgs.search.brave.com/pVtXE0ecuXkVqA2ujWK6sgtOYvKOhsH-r7tumI_7g-c/rs:fit:860:0:0:0/g:ce/aHR0cDovL3ZhbGxk/YW1lci5jYXQvd3At/Y29udGVudC91cGxv/YWRzLzIwMTgvMTEv/Y2luZ2xlLWRlbC1m/YXItc2FudHVhcmkt/c2FudC1tYXJ0aS1h/bWVyLW11bnRhbnlh/LTQuanBn", title: "Santuari El Far" },
+  { src: "https://imgs.search.brave.com/tFf6B8ZCenUXCJ6jVeDipx5f2q97HM641fJGsXdKvno/rs:fit:860:0:0:0/g:ce/aHR0cDovL3R1cmlz/bWUuYW1lci5jYXQv/d3AtY29udGVudC91/cGxvYWRzLzIwMTgv/MDMvYmljaWNhcnJp/bC1sbG9ndWVyLXRy/YW5zcG9ydC1iaWNp/Y2xldGVzLWFtZXIt/Mi5qcGc", title: "Bicicarril" },
 ];
 
 const ImageWrapper = styled("div")({
