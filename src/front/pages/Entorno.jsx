@@ -5,7 +5,7 @@ import { styled } from "@mui/material/styles";
 import Masonry from "@mui/lab/Masonry";
 
 const images = [
-  { src: "https://cf.bstatic.com/xdata/images/hotel/max1024x768/578583960.jpg?k=b62e764b5292d397ed8a6bd5e647bb3ee8e0acc84cc635da78a90f7547af68bb&o=", title: "Can Cargol" },
+  { src: "https://imgs.search.brave.com/veI3dBaZA7Vw_4gDPmooe7EOXpkBTAwjyJj3B_-D0iw/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9hY3Rp/dml0YXRzZ2Fycm90/eGEuY29tL3dwLWNv/bnRlbnQvdXBsb2Fk/cy8yMDI0LzEwL3Zv/bGNhLWNyb3NjYXQt/MTAyNHg1NzYuanBn", title: "Volcans de la Garrotxa" },
   { src: "https://imgs.search.brave.com/3lNL2b0YjFFnMhJIAU05UUzOak7rvoNnS1_HBT8VKZc/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/c2Vlbi5kZS9zZWVu/X2RiL3N0YXRpYy9p/bWcvaGVhZGVyL3Nl/ZW4uanBn", title: "Pantà de Susqueda" },
   { src: "https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MTI2NTg3OTc%3D/original/6e653096-9431-45cc-b596-08a0b25852cc.jpeg?im_w=720", title: "Can Cargol" },
   { src: "https://imgs.search.brave.com/U9BXZYYMR5COEFRU4dvn5_vQ1w9gwIpYWhyoZKATiqM/rs:fit:860:0:0:0/g:ce/aHR0cDovL3ZhbGxk/YW1lci5jYXQvd3At/Y29udGVudC91cGxv/YWRzLzIwMTgvMDkv/ZXJtaXRhLXNhbnRh/LWJyaWdpZGEtYW1l/ci0yLmpwZw", title: "Sta. Brígida" },
