@@ -47,7 +47,7 @@ export default function CalendarPage() {
 
     return (
         <div className="container py-5" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-            <p className="lead" style={{ size: "100px" }}>Selecciona las fechas disponibles para tu estancia</p>
+            <p className="lead">Selecciona las fechas disponibles para tu estancia</p>
             <div className="row" style={{ width: "100%", maxWidth: "600px" }}>
                 <div className="col-md-8 offset-md-2" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
                     <PRCalendar
