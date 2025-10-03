@@ -1,0 +1,38 @@
+/* css para calendario */
+
+.calendar-panel .p-datepicker {
+  color: black;
+  display: row;
+  width: 100%;
+  max-width: 600px;
+  margin: auto;
+}
+
+.calendar-panel button {
+  color: white;
+  background-color: green;
+  border-radius: 20px;
+}
+
+.calendar-panel .p-datepicker-month {
+  background-color: white;
+  color: black;
+  margin-right: 10px;
+}
+
+.calendar-panel .p-datepicker-year {
+  background-color: white;
+  color: black;
+}
+
+#booking-button {
+  background-color: green;
+  color: white;
+  border-radius: 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.calendar-panel th {
+  padding-left: 15px;
+}
