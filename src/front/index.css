@@ -1,0 +1,90 @@
+/* css para calendario */
+
+.calendar-panel .p-datepicker {
+  color: black;
+  display: row;
+  width: 100%;
+  max-width: 600px;
+  margin: auto;
+}
+
+.calendar-panel button {
+  color: white;
+  background-color: green;
+  border-radius: 20px;
+}
+
+.calendar-panel .p-datepicker-month {
+  background-color: white;
+  color: black;
+  margin-right: 10px;
+}
+
+.calendar-panel .p-datepicker-year {
+  background-color: white;
+  color: black;
+}
+
+#booking-button {
+  background-color: green;
+  color: white;
+  border-radius: 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.calendar-panel th {
+  padding-left: 15px;
+}
+
+/* css para navbar */
+
+.navbar button {
+  background: none;
+  color: white;
+  border: none;
+  position: relative;
+}
+
+.navbar button::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 2px;
+  display: block;
+  margin-top: 5px;
+  right: 0;
+  background: white;
+  transition: width 0.3s ease, background-color 0.3s ease;
+}
+.navbar button:hover::after {
+  width: 100%;
+  left: 0;
+  background: white;
+}
+
+.navbar span {
+  background: none;
+  display: inline-block;
+  color: white;
+  border: none;
+  position: relative;
+  text-decoration: none !important;
+}
+
+.navbar span::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 2px;
+  display: block;
+  margin-top: 5px;
+  right: 0;
+  background: white;
+  transition: width 0.3s ease, background-color 0.3s ease;
+}
+.navbar span:hover::after {
+  width: 100%;
+  left: 0;
+  background: white;
+}
