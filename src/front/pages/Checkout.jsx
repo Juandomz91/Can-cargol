@@ -7,7 +7,7 @@ import { Toast } from 'primereact/toast';
 import { RadioButton } from 'primereact/radiobutton';
 import { loadStripe } from "@stripe/stripe-js";
 
-const stripePromise = loadStripe('pk_test_51RxrAVJClk6FcopzRPr9bU6KJQNNrDHFy7W6zaYfquO4MluVeLMtSmJOnXHoky5iQ3tT7nwBCblE0bMPnT7ViA6D00YYOeZ5zN');
+const stripePromise = loadStripe('pk_test_51SEBRzRfXX5i4eS5afDiTQnlH2KZ3GnmsvepKatFySwz0kPcRLEubhWPUo4iB2BdklWlbVg8jqUjR38uaLp211HU00xhmmqs43');
 
 export default function Checkout() {
     const location = useLocation();
