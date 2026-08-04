@@ -2,9 +2,16 @@ import React, { useState, useMemo } from "react";
 import { Calendar as PRCalendar } from "primereact/calendar";
 import { useNavigate } from "react-router-dom";
 
+// IDs reales de tu BBDD (habitaciones.id) — ajusta si no coinciden
+const HABITACIONES = [
+    { id: 1, nombre: "Cama de matrimonio", tipo: "matrimonio" },
+    { id: 2, nombre: "Dos camas individuales", tipo: "dos_camas" },
+];
+
 export default function CalendarPage() {
     const navigate = useNavigate();
     const [selectedRange, setSelectedRange] = useState(null);
+    const [habitacionIds, setHabitacionIds] = useState([]); // array: puede tener 1 o las 2
 
     const toMidnight = (d) => (d ? new Date(d.getFullYear(), d.getMonth(), d.getDate()) : null);
     const [startMid, endMid] = useMemo(() => {
@@ -29,16 +36,27 @@ export default function CalendarPage() {
         return <span style={style}>{date.day}</span>;
     };
 
+    const toggleHabitacion = (id) => {
+        setHabitacionIds((prev) =>
+            prev.includes(id) ? prev.filter((h) => h !== id) : [...prev, id]
+        );
+    };
+
     const goToPayment = () => {
         const [start, end] = Array.isArray(selectedRange) ? selectedRange : [];
         if (!start || !end) {
             alert("Por favor, selecciona un rango de fechas válido.");
             return;
         }
+        if (habitacionIds.length === 0) {
+            alert("Por favor, selecciona al menos una habitación.");
+            return;
+        }
         navigate("/checkout", {
             state: {
                 startDate: selectedRange[0].toISOString(),
-                endDate: selectedRange[1].toISOString()
+                endDate: selectedRange[1].toISOString(),
+                habitacionIds, // ej. [1] o [1, 2]
             }
         });
     };
@@ -127,6 +145,38 @@ export default function CalendarPage() {
                     padding: 28,
                 }}
             >
+                {/* Selector de habitaciones (multi-selección) */}
+                <p style={{ fontSize: 13, color: "#4B5647", marginBottom: 8, fontWeight: 600 }}>
+                    ¿Qué habitación quieres reservar?
+                </p>
+                <div style={{ display: "flex", gap: 8, marginBottom: 20 }}>
+                    {HABITACIONES.map((h) => (
+                        <button
+                            key={h.id}
+                            type="button"
+                            onClick={() => toggleHabitacion(h.id)}
+                            style={{
+                                flex: 1,
+                                padding: "10px 12px",
+                                borderRadius: 4,
+                                border: habitacionIds.includes(h.id) ? "2px solid #1F3327" : "1px solid #D8D5C7",
+                                background: habitacionIds.includes(h.id) ? "#DCE6D8" : "transparent",
+                                color: "#1F3327",
+                                fontWeight: 500,
+                                fontSize: 13,
+                                cursor: "pointer",
+                            }}
+                        >
+                            {h.nombre}
+                        </button>
+                    ))}
+                </div>
+                {habitacionIds.length === HABITACIONES.length && (
+                    <p style={{ fontSize: 12, color: "#6C7867", marginTop: -12, marginBottom: 20 }}>
+                        Has seleccionado la casa completa
+                    </p>
+                )}
+
                 <PRCalendar
                     inline
                     selectionMode="range"
@@ -147,17 +197,18 @@ export default function CalendarPage() {
                 <button
                     id="booking-button"
                     onClick={goToPayment}
+                    disabled={habitacionIds.length === 0}
                     style={{
                         marginTop: 20,
                         width: "100%",
                         padding: "14px",
                         border: "none",
                         borderRadius: 4,
-                        background: "#1F3327",
+                        background: habitacionIds.length === 0 ? "#9AA398" : "#1F3327",
                         color: "#F6F4EE",
                         fontSize: 15,
                         fontWeight: 600,
-                        cursor: "pointer",
+                        cursor: habitacionIds.length === 0 ? "not-allowed" : "pointer",
                     }}
                 >
                     Reservar
@@ -166,4 +217,3 @@ export default function CalendarPage() {
         </div>
     );
 }
-

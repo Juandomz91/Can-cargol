@@ -4,12 +4,29 @@ from sqlalchemy.orm import Mapped, mapped_column
 
 db = SQLAlchemy()
 
+class Habitacion(db.Model):
+    __tablename__ = "habitaciones"
+
+    id = db.Column(db.Integer, primary_key=True)
+    nombre = db.Column(db.String(80), nullable=False)
+    tipo = db.Column(db.String(30), nullable=False)  # "matrimonio" / "dos_camas"
+    capacidad = db.Column(db.Integer, nullable=False, default=2)
+    descripcion = db.Column(db.Text, nullable=True)
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "nombre": self.nombre,
+            "tipo": self.tipo,
+            "capacidad": self.capacidad,
+            "descripcion": self.descripcion
+        }
+
 class User(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
     email: Mapped[str] = mapped_column(String(120), unique=True, nullable=False)
     password: Mapped[str] = mapped_column(nullable=False)
     is_active: Mapped[bool] = mapped_column(Boolean(), nullable=False)
-
 
     def serialize(self):
         return {
@@ -19,10 +36,34 @@ class User(db.Model):
         }
 
 
+class Habitacion(db.Model):
+    __tablename__ = "habitaciones"
+
+    id = db.Column(db.Integer, primary_key=True)
+    nombre = db.Column(db.String(80), nullable=False)      # "Doble matrimonio", "Doble dos camas"
+    tipo = db.Column(db.String(30), nullable=False)         # "matrimonio" / "dos_camas"
+    capacidad = db.Column(db.Integer, nullable=False, default=2)
+    descripcion = db.Column(db.Text, nullable=True)
+
+    reservas = db.relationship("Reserva", backref="habitacion", lazy=True)
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "nombre": self.nombre,
+            "tipo": self.tipo,
+            "capacidad": self.capacidad,
+            "descripcion": self.descripcion
+        }
+
+
 class Reserva(db.Model):
     __tablename__ = "reservas"
 
     id = db.Column(db.Integer, primary_key=True)
+
+    habitacion_id = db.Column(db.Integer, db.ForeignKey("habitaciones.id"), nullable=False)
+
     nombre = db.Column(db.String(120), nullable=False)
     email = db.Column(db.String(120), nullable=False)
     telefono = db.Column(db.String(50), nullable=False)
@@ -47,6 +88,7 @@ class Reserva(db.Model):
     def serialize(self):
         return {
             "id": self.id,
+            "habitacion_id": self.habitacion_id,
             "nombre": self.nombre,
             "email": self.email,
             "telefono": self.telefono,
@@ -60,3 +102,4 @@ class Reserva(db.Model):
             "stripe_session_id": self.stripe_session_id,
             "stripe_payment_intent": self.stripe_payment_intent
         }
+        

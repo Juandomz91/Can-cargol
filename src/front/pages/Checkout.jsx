@@ -7,6 +7,12 @@ import { loadStripe } from "@stripe/stripe-js";
 
 const stripePromise = loadStripe('pk_test_51SEBRzRfXX5i4eS5afDiTQnlH2KZ3GnmsvepKatFySwz0kPcRLEubhWPUo4iB2BdklWlbVg8jqUjR38uaLp211HU00xhmmqs43');
 
+// Debe coincidir con HABITACIONES en CalendarPage y HABITACIONES_VALIDAS en routes.py
+const HABITACIONES = {
+    1: "Cama de matrimonio",
+    2: "Dos camas individuales",
+};
+
 export default function Checkout() {
     const location = useLocation();
     const navigate = useNavigate();
@@ -21,9 +27,9 @@ export default function Checkout() {
     const [pagoEnProceso, setPagoEnProceso] = useState(false);
     const [pagoCompletado, setPagoCompletado] = useState(false);
     const [estadoReserva, setEstadoReserva] = useState("pendiente");
-    const [reservaId, setReservaId] = useState("");
+    const [reservaIds, setReservaIds] = useState([]);
 
-    const { startDate, endDate } = location.state || {};
+    const { startDate, endDate, habitacionIds } = location.state || {};
 
     useEffect(() => {
         const urlParams = new URLSearchParams(window.location.search);
@@ -34,10 +40,10 @@ export default function Checkout() {
     }, []);
 
     useEffect(() => {
-        if (!startDate || !endDate) {
+        if (!startDate || !endDate || !habitacionIds || habitacionIds.length === 0) {
             navigate("/calendario");
         }
-    }, [startDate, endDate, navigate]);
+    }, [startDate, endDate, habitacionIds, navigate]);
 
     const calcularNoches = () => {
         if (!startDate || !endDate) return 0;
@@ -47,25 +53,25 @@ export default function Checkout() {
         return Math.ceil(difTiempo / (1000 * 60 * 60 * 24));
     };
 
-    const calcularTotal = (start, end) => {
-        if (!start || !end) return 0;
+    // Precio por noche de UNA habitación (120 laborables / 150 findes),
+    // multiplicado por el número de habitaciones seleccionadas.
+    const calcularTotal = (start, end, numHabitaciones) => {
+        if (!start || !end || !numHabitaciones) return 0;
         const inicio = new Date(start);
         const fin = new Date(end);
-        let total = 0;
+        let totalPorHabitacion = 0;
 
         for (let d = new Date(inicio); d < fin; d.setDate(d.getDate() + 1)) {
             const diaSemana = d.getDay();
-            if (diaSemana === 0 || diaSemana === 6) {
-                total += 150;
-            } else {
-                total += 117;
-            }
+            totalPorHabitacion += (diaSemana === 0 || diaSemana === 6) ? 150 : 120;
         }
-        return total;
+        return totalPorHabitacion * numHabitaciones;
     };
 
     const noches = calcularNoches();
-    const totalReserva = calcularTotal(startDate, endDate);
+    const numHabitaciones = habitacionIds?.length || 0;
+    const totalReserva = calcularTotal(startDate, endDate, numHabitaciones);
+    const nombresHabitaciones = (habitacionIds || []).map(id => HABITACIONES[id]).join(" + ");
 
     const formularioValido = () => {
         return (
@@ -84,7 +90,7 @@ export default function Checkout() {
             if (data.success) {
                 setPagoCompletado(true);
                 setEstadoReserva("pendiente");
-                setReservaId(data.reservationId || data.reservaId || "");
+                setReservaIds(data.reservaIds || []);
                 toast.current?.show({
                     severity: "success",
                     summary: "Pago exitoso",
@@ -117,14 +123,15 @@ export default function Checkout() {
                 body: JSON.stringify({
                     startDate,
                     endDate,
+                    habitacionIds,
                     datosCliente,
                     totalReserva,
                     noches,
                 }),
             });
 
-            const { sessionId, error } = await response.json();
-            if (error) throw new Error(error);
+            const { sessionId, error, detalles } = await response.json();
+            if (error) throw new Error(detalles?.join(", ") || error);
 
             const stripe = await stripePromise;
             const { error: stripeError } = await stripe.redirectToCheckout({ sessionId });
@@ -146,7 +153,7 @@ export default function Checkout() {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    reservationId: reservaId,
+                    reservationIds: reservaIds,
                     approve: aprobar,
                 }),
             });
@@ -241,6 +248,7 @@ export default function Checkout() {
                         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 32 }}>
                             <div style={{ borderRight: "1px solid #D8D5C7", paddingRight: 24 }}>
                                 <div style={{ fontWeight: 700, fontSize: 16, color: "#1F3327", marginBottom: 14 }}>1. Detalles de la Reserva</div>
+                                <p style={{ fontSize: 15, color: "#3A4436", margin: "0 0 8px" }}><strong>Habitación(es):</strong> {nombresHabitaciones}</p>
                                 <p style={{ fontSize: 15, color: "#3A4436", margin: "0 0 8px" }}><strong>Fecha de inicio:</strong> {formatearFecha(startDate)}</p>
                                 <p style={{ fontSize: 15, color: "#3A4436", margin: "0 0 8px" }}><strong>Fecha de fin:</strong> {formatearFecha(endDate)}</p>
                                 <p style={{ fontSize: 15, color: "#3A4436", margin: 0 }}><strong>Número de noches:</strong> {noches}</p>
@@ -283,7 +291,9 @@ export default function Checkout() {
                                 {noches > 0 && (
                                     <div style={{ marginBottom: 20, padding: 16, background: "#F6F4EE", borderRadius: 4, border: "1px solid #D8D5C7" }}>
                                         <div style={{ fontWeight: 700, fontSize: 14, color: "#1F3327" }}>Resumen del Precio</div>
-                                        <p style={{ margin: "6px 0 2px", fontSize: 14, color: "#4B5647" }}>{noches} noches seleccionadas</p>
+                                        <p style={{ margin: "6px 0 2px", fontSize: 14, color: "#4B5647" }}>
+                                            {noches} noches × {numHabitaciones} habitación(es)
+                                        </p>
                                         <p style={{ margin: 0, fontSize: 22, fontWeight: 700, color: "#1F3327" }}>Total: €{totalReserva}</p>
                                         <small style={{ color: "#6C7867" }}>Procesado de forma segura por Stripe</small>
                                     </div>
