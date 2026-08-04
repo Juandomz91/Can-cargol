@@ -23,10 +23,8 @@ export default function Checkout() {
     const [estadoReserva, setEstadoReserva] = useState("pendiente");
     const [reservaId, setReservaId] = useState("");
 
-    // Fechas recibidas desde CalendarPage
     const { startDate, endDate } = location.state || {};
 
-    // Verificar estado del pago Stripe al cargar (si vuelve de Stripe Checkout)
     useEffect(() => {
         const urlParams = new URLSearchParams(window.location.search);
         const sessionId = urlParams.get('session_id');
@@ -35,14 +33,12 @@ export default function Checkout() {
         }
     }, []);
 
-    // Redirigir si no hay fechas seleccionadas
     useEffect(() => {
         if (!startDate || !endDate) {
             navigate("/calendario");
         }
     }, [startDate, endDate, navigate]);
 
-    // Calcular número de noches
     const calcularNoches = () => {
         if (!startDate || !endDate) return 0;
         const inicio = new Date(startDate);
@@ -51,7 +47,6 @@ export default function Checkout() {
         return Math.ceil(difTiempo / (1000 * 60 * 60 * 24));
     };
 
-    // Calcular total según días laborales y fines de semana
     const calcularTotal = (start, end) => {
         if (!start || !end) return 0;
         const inicio = new Date(start);
@@ -59,11 +54,11 @@ export default function Checkout() {
         let total = 0;
 
         for (let d = new Date(inicio); d < fin; d.setDate(d.getDate() + 1)) {
-            const diaSemana = d.getDay(); // 0=Domingo, 6=Sábado
+            const diaSemana = d.getDay();
             if (diaSemana === 0 || diaSemana === 6) {
-                total += 150; // Fin de semana
+                total += 150;
             } else {
-                total += 117; // Día laboral
+                total += 117;
             }
         }
         return total;
@@ -72,7 +67,6 @@ export default function Checkout() {
     const noches = calcularNoches();
     const totalReserva = calcularTotal(startDate, endDate);
 
-    // Validación del formulario
     const formularioValido = () => {
         return (
             datosCliente.nombre.trim() &&
@@ -82,7 +76,6 @@ export default function Checkout() {
         );
     };
 
-    // Verificar pago en backend
     const verificarPago = async (sessionId) => {
         try {
             const response = await fetch(`http://localhost:3001/api/verify-payment/${sessionId}`);
@@ -110,7 +103,6 @@ export default function Checkout() {
         }
     };
 
-    // Procesar pago con Stripe Checkout
     const procesarPago = async () => {
         if (!formularioValido()) {
             toast.current?.show({ severity: "error", summary: "Error", detail: "Completa todos los campos correctamente." });
@@ -148,7 +140,6 @@ export default function Checkout() {
         }
     };
 
-    // Simulación del propietario (aprobación/rechazo demo)
     const simularDecisionPropietario = async (aprobar) => {
         try {
             const response = await fetch("http://localhost:3001/api/owner-decision", {
@@ -178,150 +169,146 @@ export default function Checkout() {
         }
     };
 
-    // Formatear fechas
     const formatearFecha = (fecha) => {
         if (!fecha) return "-";
         const opciones = { year: "numeric", month: "long", day: "numeric" };
         return new Date(fecha).toLocaleDateString("es-ES", opciones);
     };
 
+    const cardStyle = {
+        background: "#EAE8DE",
+        borderRadius: 6,
+        padding: 32,
+        border: "none",
+    };
+    const labelStyle = { fontSize: 13, fontWeight: 600, color: "#1F3327", display: "block", marginBottom: 6 };
+    const inputStyle = { width: "100%", borderRadius: 4, border: "1px solid #C8CABB", background: "#F6F4EE" };
+    const primaryBtn = { borderRadius: 4, background: "#1F3327", color: "#F6F4EE", border: "none", fontWeight: 600 };
+
     return (
-        <div className="container py-5">
+        <div style={{ background: "#F6F4EE", minHeight: "100vh", padding: "88px 24px", fontFamily: "'Inter', sans-serif" }}>
             <Toast ref={toast} />
 
-            <div className="row justify-content-center">
-                <div className="col-md-8">
-                    <h1 className="text-center mb-4">Finalizar Reserva</h1>
+            <div style={{ maxWidth: 760, margin: "0 auto" }}>
+                <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 34, fontWeight: 700, color: "#1F3327", textAlign: "center", marginBottom: 40 }}>
+                    Finalizar Reserva
+                </div>
 
-                    {pagoCompletado ? (
-                        // ==========================
-                        // BLOQUE: PAGO COMPLETADO
-                        // ==========================
-                        <div className="card mb-4">
-                            <div className="card-body">
-                                <h5 className="card-title">Estado de tu Reserva</h5>
-                                {estadoReserva === 'pendiente' && (
-                                    <div className="alert alert-info">
-                                        <i className="pi pi-clock"></i> Tu reserva está pendiente de aprobación del propietario.
-                                        El pago ha sido retenido en Stripe y se procesará una vez aprobada.
-                                    </div>
-                                )}
-                                {estadoReserva === 'aprobada' && (
-                                    <div className="alert alert-success">
-                                        <i className="pi pi-check"></i> ¡Reserva confirmada! El pago ha sido procesado por Stripe.
-                                        Recibirás un email de confirmación.
-                                    </div>
-                                )}
-                                {estadoReserva === 'rechazada' && (
-                                    <div className="alert alert-warning">
-                                        <i className="pi pi-times"></i> Tu reserva ha sido rechazada.
-                                        El pago será reembolsado automáticamente por Stripe en 3-5 días hábiles.
-                                    </div>
-                                )}
-
-                                {estadoReserva === 'pendiente' && (
-                                    <div className="mt-3">
-                                        <small className="text-muted">Simulación del propietario:</small><br />
-                                        <Button
-                                            label="Aprobar Reserva"
-                                            className="p-button-success p-button-sm me-2 mt-2"
-                                            onClick={() => simularDecisionPropietario(true)}
-                                        />
-                                        <Button
-                                            label="Rechazar Reserva"
-                                            className="p-button-danger p-button-sm mt-2"
-                                            onClick={() => simularDecisionPropietario(false)}
-                                        />
-                                    </div>
-                                )}
-                            </div>
+                {pagoCompletado ? (
+                    <div style={cardStyle}>
+                        <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: 18, color: "#1F3327", marginBottom: 16 }}>
+                            Estado de tu Reserva
                         </div>
-                    ) : (
-                        // ==========================
-                        // BLOQUE: FORMULARIO + PAGO
-                        // ==========================
-                        <div className="card mb-4 p-4 shadow-lg">
-                            <h2 className="text-2xl font-semibold mb-4 text-center">Datos y Pago</h2>
-                            <div className="p-grid p-fluid">
+                        {estadoReserva === 'pendiente' && (
+                            <div style={{ background: "#DCE6D8", color: "#1F3327", padding: "14px 16px", borderRadius: 4, fontSize: 14 }}>
+                                Tu reserva está pendiente de aprobación del propietario. El pago ha sido retenido en Stripe y se procesará una vez aprobada.
+                            </div>
+                        )}
+                        {estadoReserva === 'aprobada' && (
+                            <div style={{ background: "#DCE6D8", color: "#1F3327", padding: "14px 16px", borderRadius: 4, fontSize: 14 }}>
+                                ¡Reserva confirmada! El pago ha sido procesado por Stripe. Recibirás un email de confirmación.
+                            </div>
+                        )}
+                        {estadoReserva === 'rechazada' && (
+                            <div style={{ background: "#F3E6D8", color: "#7A4B22", padding: "14px 16px", borderRadius: 4, fontSize: 14 }}>
+                                Tu reserva ha sido rechazada. El pago será reembolsado automáticamente por Stripe en 3-5 días hábiles.
+                            </div>
+                        )}
 
-                                {/* Columna 1: Detalles de la reserva */}
-                                <div className="p-col-12 p-md-6 mb-4 border-b md:border-b-0 md:border-r border-gray-200 md:pr-4">
-                                    <h5 className="mb-3 font-bold text-lg">1. Detalles de la Reserva</h5>
-                                    <p><strong>Fecha de inicio:</strong> {formatearFecha(startDate)}</p>
-                                    <p><strong>Fecha de fin:</strong> {formatearFecha(endDate)}</p>
-                                    <p className="mb-4"><strong>Número de noches:</strong> {noches}</p>
-                                </div>
-
-                                {/* Columna 2: Datos del cliente */}
-                                <div className="p-col-12 p-md-6 md:pl-4">
-                                    <h5 className="mb-3 font-bold text-lg">2. Datos del Cliente</h5>
-                                    <div className="field mb-3">
-                                        <label htmlFor="nombre">Nombre Completo *</label>
-                                        <InputText
-                                            id="nombre"
-                                            value={datosCliente.nombre}
-                                            onChange={(e) => setDatosCliente({ ...datosCliente, nombre: e.target.value })}
-                                            className="w-100"
-                                            placeholder="Introduce tu nombre completo"
-                                        />
-                                    </div>
-                                    <div className="field mb-3">
-                                        <label htmlFor="email">Email *</label>
-                                        <InputText
-                                            id="email"
-                                            type="email"
-                                            value={datosCliente.email}
-                                            onChange={(e) => setDatosCliente({ ...datosCliente, email: e.target.value })}
-                                            className="w-100"
-                                            placeholder="tu@email.com"
-                                        />
-                                    </div>
-                                    <div className="field mb-4">
-                                        <label htmlFor="telefono">Teléfono *</label>
-                                        <InputText
-                                            id="telefono"
-                                            value={datosCliente.telefono}
-                                            onChange={(e) => setDatosCliente({ ...datosCliente, telefono: e.target.value })}
-                                            className="w-100"
-                                            placeholder="+34 123 456 789"
-                                        />
-                                    </div>
-
-                                    {/* Resumen del precio */}
-                                    {noches > 0 && (
-                                        <div className="mb-4 p-3 bg-gray-50 rounded border border-gray-200">
-                                            <h6 className="font-semibold">Resumen del Precio</h6>
-                                            <p className="mb-1 text-sm">{noches} noches seleccionadas</p>
-                                            <p className="mb-0 text-xl font-bold text-green-600">Total: €{totalReserva}</p>
-                                            <small className="text-muted">Procesado de forma segura por Stripe</small>
-                                        </div>
-                                    )}
-
-                                    {/* Botón de Pago */}
-                                    <div className="text-center mt-4">
-                                        <Button
-                                            label={pagoEnProceso ? "Redirigiendo a Stripe..." : "Pagar"}
-                                            className="p-button-success w-full"
-                                            onClick={procesarPago}
-                                            disabled={!formularioValido() || pagoEnProceso}
-                                            loading={pagoEnProceso}
-                                            style={{ borderRadius: '20px', height: '50px', width: '150px', backgroundColor: 'green', color: 'white' }}
-                                        />
-                                    </div>
+                        {estadoReserva === 'pendiente' && (
+                            <div style={{ marginTop: 20 }}>
+                                <small style={{ color: "#6C7867" }}>Simulación del propietario:</small><br />
+                                <div style={{ display: "flex", gap: 10, marginTop: 10 }}>
+                                    <Button
+                                        label="Aprobar Reserva"
+                                        onClick={() => simularDecisionPropietario(true)}
+                                        style={{ ...primaryBtn, background: "#1F3327" }}
+                                    />
+                                    <Button
+                                        label="Rechazar Reserva"
+                                        onClick={() => simularDecisionPropietario(false)}
+                                        style={{ ...primaryBtn, background: "#8C4A2F" }}
+                                    />
                                 </div>
                             </div>
-                        </div>
-                    )}
-
-                    {/* Volver al calendario */}
-                    <div className="text-center mt-5">
-                        <Button
-                            label="Volver al Calendario"
-                            className="p-button-secondary p-button-text"
-                            onClick={() => navigate('/calendario')}
-                            style={{ borderRadius: '20px', backgroundColor: 'green', color: 'white' }}
-                        />
+                        )}
                     </div>
+                ) : (
+                    <div style={cardStyle}>
+                        <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 22, fontWeight: 700, color: "#1F3327", textAlign: "center", marginBottom: 28 }}>
+                            Datos y Pago
+                        </div>
+                        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 32 }}>
+                            <div style={{ borderRight: "1px solid #D8D5C7", paddingRight: 24 }}>
+                                <div style={{ fontWeight: 700, fontSize: 16, color: "#1F3327", marginBottom: 14 }}>1. Detalles de la Reserva</div>
+                                <p style={{ fontSize: 15, color: "#3A4436", margin: "0 0 8px" }}><strong>Fecha de inicio:</strong> {formatearFecha(startDate)}</p>
+                                <p style={{ fontSize: 15, color: "#3A4436", margin: "0 0 8px" }}><strong>Fecha de fin:</strong> {formatearFecha(endDate)}</p>
+                                <p style={{ fontSize: 15, color: "#3A4436", margin: 0 }}><strong>Número de noches:</strong> {noches}</p>
+                            </div>
+
+                            <div>
+                                <div style={{ fontWeight: 700, fontSize: 16, color: "#1F3327", marginBottom: 14 }}>2. Datos del Cliente</div>
+                                <div style={{ marginBottom: 14 }}>
+                                    <label style={labelStyle} htmlFor="nombre">Nombre Completo *</label>
+                                    <InputText
+                                        id="nombre"
+                                        value={datosCliente.nombre}
+                                        onChange={(e) => setDatosCliente({ ...datosCliente, nombre: e.target.value })}
+                                        style={inputStyle}
+                                        placeholder="Introduce tu nombre completo"
+                                    />
+                                </div>
+                                <div style={{ marginBottom: 14 }}>
+                                    <label style={labelStyle} htmlFor="email">Email *</label>
+                                    <InputText
+                                        id="email"
+                                        type="email"
+                                        value={datosCliente.email}
+                                        onChange={(e) => setDatosCliente({ ...datosCliente, email: e.target.value })}
+                                        style={inputStyle}
+                                        placeholder="tu@email.com"
+                                    />
+                                </div>
+                                <div style={{ marginBottom: 20 }}>
+                                    <label style={labelStyle} htmlFor="telefono">Teléfono *</label>
+                                    <InputText
+                                        id="telefono"
+                                        value={datosCliente.telefono}
+                                        onChange={(e) => setDatosCliente({ ...datosCliente, telefono: e.target.value })}
+                                        style={inputStyle}
+                                        placeholder="+34 123 456 789"
+                                    />
+                                </div>
+
+                                {noches > 0 && (
+                                    <div style={{ marginBottom: 20, padding: 16, background: "#F6F4EE", borderRadius: 4, border: "1px solid #D8D5C7" }}>
+                                        <div style={{ fontWeight: 700, fontSize: 14, color: "#1F3327" }}>Resumen del Precio</div>
+                                        <p style={{ margin: "6px 0 2px", fontSize: 14, color: "#4B5647" }}>{noches} noches seleccionadas</p>
+                                        <p style={{ margin: 0, fontSize: 22, fontWeight: 700, color: "#1F3327" }}>Total: €{totalReserva}</p>
+                                        <small style={{ color: "#6C7867" }}>Procesado de forma segura por Stripe</small>
+                                    </div>
+                                )}
+
+                                <div style={{ textAlign: "center", marginTop: 16 }}>
+                                    <Button
+                                        label={pagoEnProceso ? "Redirigiendo a Stripe..." : "Pagar"}
+                                        onClick={procesarPago}
+                                        disabled={!formularioValido() || pagoEnProceso}
+                                        loading={pagoEnProceso}
+                                        style={{ ...primaryBtn, height: 50, width: "100%" }}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                )}
+
+                <div style={{ textAlign: "center", marginTop: 40 }}>
+                    <Button
+                        label="Volver al Calendario"
+                        onClick={() => navigate('/calendario')}
+                        style={{ background: "transparent", border: "none", color: "#1F3327", fontWeight: 600, textDecoration: "underline" }}
+                    />
                 </div>
             </div>
         </div>

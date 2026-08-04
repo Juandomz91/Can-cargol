@@ -16,7 +16,7 @@ const images = [
 const ImageWrapper = styled("div")({
   position: "relative",
   overflow: "hidden",
-  borderRadius: "12px",
+  borderRadius: "4px",
   cursor: "pointer",
   "& img": {
     width: "100%",
@@ -25,17 +25,20 @@ const ImageWrapper = styled("div")({
     transition: "transform 0.4s ease",
   },
   "&:hover img": {
-    transform: "scale(1.1)",
+    transform: "scale(1.06)",
   },
   "& .overlay": {
     position: "absolute",
     bottom: 0,
     left: 0,
     right: 0,
-    background: "rgba(0,0,0,0.6)",
-    color: "#fff",
-    padding: "8px",
-    textAlign: "center",
+    background: "linear-gradient(0deg, rgba(31,51,39,0.85), transparent)",
+    color: "#F6F4EE",
+    padding: "20px 14px 12px",
+    textAlign: "left",
+    fontFamily: "'Space Grotesk', sans-serif",
+    fontWeight: 600,
+    fontSize: 15,
     opacity: 0,
     transition: "opacity 0.3s ease",
   },
@@ -45,28 +48,31 @@ const ImageWrapper = styled("div")({
 });
 
 export default function Entorno() {
-  // ✅ Estado para controlar qué imagen está ampliada
   const [selectedImage, setSelectedImage] = useState(null);
 
   return (
     <>
-      <Box
-        sx={{
-          width: "100%",
-          minHeight: "100vh",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          p: 2,
-        }}
-      >
-        <Box sx={{ width: '100%', maxWidth: 1200, mx: 'auto' }}>
+      <Box sx={{ width: "100%", minHeight: "100vh", background: "#F6F4EE", py: 8, px: 2 }}>
+        <Box sx={{ maxWidth: 1200, mx: "auto", mb: 5, textAlign: "center" }}>
+          <Box
+            sx={{
+              fontFamily: "'Space Grotesk', sans-serif",
+              fontWeight: 700,
+              fontSize: { xs: 30, md: 34 },
+              color: "#1F3327",
+            }}
+          >
+            El entorno
+          </Box>
+          <Box sx={{ fontSize: 15, color: "#4B5647", mt: 1.5 }}>
+            Rutas en bicicleta, senderos y montañas cubiertas de bosque a las puertas de casa.
+          </Box>
+        </Box>
+
+        <Box sx={{ width: "100%", maxWidth: 1200, mx: "auto" }}>
           <Masonry columns={{ xs: 1, sm: 2, md: 3 }} spacing={2}>
             {images.map((item, index) => (
-              <ImageWrapper 
-                key={index}
-                onClick={() => setSelectedImage(item.src)} // ✅ Al hacer clic, guardamos la imagen
-              >
+              <ImageWrapper key={index} onClick={() => setSelectedImage(item.src)}>
                 <img src={item.src} alt={item.title} />
                 <div className="overlay">{item.title}</div>
               </ImageWrapper>
@@ -75,48 +81,43 @@ export default function Entorno() {
         </Box>
       </Box>
 
-      {/* ✅ Modal para mostrar la imagen ampliada */}
       {selectedImage && (
-        <div 
+        <div
           style={{
-            position: 'fixed',
+            position: "fixed",
             top: 0,
             left: 0,
             right: 0,
             bottom: 0,
-            backgroundColor: 'rgba(0,0,0,0.9)',
+            backgroundColor: "rgba(20,26,20,0.92)",
             zIndex: 9999,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            padding: '16px'
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "16px",
           }}
-          onClick={() => setSelectedImage(null)} // ✅ Cerrar al hacer clic en el fondo
+          onClick={() => setSelectedImage(null)}
         >
-          <img 
-            src={selectedImage} 
+          <img
+            src={selectedImage}
             alt="Imagen ampliada"
-            style={{
-              maxWidth: '100%',
-              maxHeight: '100%',
-              objectFit: 'contain'
-            }}
-            onClick={(e) => e.stopPropagation()} // ✅ Evita cerrar al clicar la imagen
+            style={{ maxWidth: "100%", maxHeight: "100%", objectFit: "contain", borderRadius: 4 }}
+            onClick={(e) => e.stopPropagation()}
           />
-          <button 
+          <button
             style={{
-              position: 'absolute',
-              top: '16px',
-              right: '16px',
-              background: 'none',
-              border: 'none',
-              color: 'white',
-              fontSize: '48px',
-              cursor: 'pointer',
+              position: "absolute",
+              top: "16px",
+              right: "16px",
+              background: "none",
+              border: "none",
+              color: "#C9A66B",
+              fontSize: "48px",
+              cursor: "pointer",
               lineHeight: 1,
-              fontWeight: 'bold'
+              fontWeight: "bold",
             }}
-            onClick={() => setSelectedImage(null)} // ✅ Cerrar con el botón X
+            onClick={() => setSelectedImage(null)}
           >
             ×
           </button>

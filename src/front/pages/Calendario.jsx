@@ -21,13 +21,13 @@ export default function CalendarPage() {
         const isEnd = endMid && currentMid.getTime() === endMid.getTime();
         const isBetween = startMid && endMid && currentMid > startMid && currentMid < endMid;
 
-        const style = (isStart || isEnd || isBetween)
-            ? { color: 'green', backgroundColor: "rgb(198, 252, 206)", borderRadius: "5px", fontWeight: 400 }
+        const style = (isStart || isEnd)
+            ? { color: "#F6F4EE", backgroundColor: "#1F3327", borderRadius: "4px", fontWeight: 600 }
+            : isBetween
+            ? { color: "#1F3327", backgroundColor: "#DCE6D8", borderRadius: "4px", fontWeight: 400 }
             : undefined;
         return <span style={style}>{date.day}</span>;
     };
-
-    // CONST PARA DERIVACION AL CHECKOUT PAYMENT DE LA RESERVA
 
     const goToPayment = () => {
         const [start, end] = Array.isArray(selectedRange) ? selectedRange : [];
@@ -43,33 +43,127 @@ export default function CalendarPage() {
         });
     };
 
-    // END CONST PARA DERIVACION AL CHECKOUT PAYMENT DE LA RESERVA
-
     return (
-        <div className="container py-5" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-            <p className="lead">Selecciona las fechas disponibles para tu estancia</p>
-            <div className="row" style={{ width: "100%", maxWidth: "600px" }}>
-                <div className="col-md-8 offset-md-2" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-                    <PRCalendar
-                        inline
-                        selectionMode="range"
-                        value={selectedRange}
-                        onChange={(e) => setSelectedRange(e.value)}
-                        numberOfMonths={1}
-                        className="no-border calendar-panel"
-                        dateTemplate={dateTemplate}
-                        style={{ width: "100%" }}
-                        showButtonBar
+        <div
+            style={{
+                background: "#F6F4EE",
+                minHeight: "100vh",
+                width: "100%",
+                boxSizing: "border-box",
+                padding: "88px 24px",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                fontFamily: "'Inter', sans-serif",
+            }}
+        >
+            <style>{`
+                .can-cargol-calendar.p-datepicker { border: none; background: transparent; font-family: 'Inter', sans-serif; width: 100%; }
+                .can-cargol-calendar .p-datepicker-header { background: transparent; border: none; padding-bottom: 12px; }
+                .can-cargol-calendar table {
+                    table-layout: fixed;
+                    width: 100%;
+                }
+                .can-cargol-calendar table th,
+                .can-cargol-calendar table td {
+                    width: 14.28%;
+                }
+                .can-cargol-calendar .p-datepicker-header .p-datepicker-title { font-family: 'Space Grotesk', sans-serif; font-weight: 700; color: #1F3327; }
+                .can-cargol-calendar .p-datepicker-title button,
+                .can-cargol-calendar .p-datepicker-title .p-datepicker-month,
+                .can-cargol-calendar .p-datepicker-title .p-datepicker-year {
+                    display: inline-block;
+                }
+                .can-cargol-calendar .p-datepicker-title .p-datepicker-month {
+                    margin-right: 0.35rem;
+                }
+                .can-cargol-calendar .p-datepicker-prev,
+                .can-cargol-calendar .p-datepicker-next {
+                    background: transparent !important;
+                    border: none !important;
+                    color: #1F3327 !important;
+                    width: auto !important;
+                    height: auto !important;
+                    box-shadow: none !important;
+                }
+                .can-cargol-calendar .p-datepicker-prev:hover,
+                .can-cargol-calendar .p-datepicker-next:hover { background: transparent !important; color: #C9A66B !important; }
+                .can-cargol-calendar table th { color: #6C7867; font-weight: 700; text-transform: uppercase; font-size: 12px; border: none; }
+                .can-cargol-calendar table td { border: none; text-align: center; }
+                .can-cargol-calendar table td > span {
+                    width: 2.4rem; height: 2.4rem; line-height: 2.4rem; margin: 0 auto;
+                    color: #1F3327; border-radius: 4px;
+                }
+                .can-cargol-calendar table td > span:hover { background: #DCE6D8 !important; }
+                .can-cargol-calendar .p-datepicker-buttonbar {
+                    border-top: 1px solid #D8D5C7; padding-top: 16px; display: flex; justify-content: space-between;
+                }
+                .can-cargol-calendar .p-datepicker-buttonbar .p-button {
+                    background: #1F3327 !important; border: none !important; color: #F6F4EE !important;
+                    border-radius: 4px !important; box-shadow: none !important; font-weight: 600;
+                }
+            `}</style>
 
-                    />
-                    {selectedRange?.[0] && selectedRange?.[1] && (
-                        <p className="mt-3" style={{ fontSize: "1rem", color: "green" }}>
-                            Fecha seleccionada: {selectedRange[0].toLocaleDateString()} — {selectedRange[1].toLocaleDateString()}
-                        </p>
-                    )}
-                    <button id="booking-button" onClick={goToPayment}>Reservar</button>
-                </div>
+            <div
+                style={{
+                    fontFamily: "'Space Grotesk', sans-serif",
+                    fontSize: 34,
+                    fontWeight: 700,
+                    color: "#1F3327",
+                }}
+            >
+                Reservas
+            </div>
+            <p style={{ fontSize: 16, color: "#4B5647", marginTop: 12, marginBottom: 32 }}>
+                Selecciona las fechas disponibles para tu estancia
+            </p>
+
+            <div
+                style={{
+                    width: "100%",
+                    maxWidth: 420,
+                    background: "#EAE8DE",
+                    borderRadius: 6,
+                    padding: 28,
+                }}
+            >
+                <PRCalendar
+                    inline
+                    selectionMode="range"
+                    value={selectedRange}
+                    onChange={(e) => setSelectedRange(e.value)}
+                    numberOfMonths={1}
+                    className="can-cargol-calendar"
+                    dateTemplate={dateTemplate}
+                    showButtonBar
+                />
+
+                {selectedRange?.[0] && selectedRange?.[1] && (
+                    <p style={{ marginTop: 16, fontSize: 14, color: "#1F3327", textAlign: "center" }}>
+                        {selectedRange[0].toLocaleDateString()} — {selectedRange[1].toLocaleDateString()}
+                    </p>
+                )}
+
+                <button
+                    id="booking-button"
+                    onClick={goToPayment}
+                    style={{
+                        marginTop: 20,
+                        width: "100%",
+                        padding: "14px",
+                        border: "none",
+                        borderRadius: 4,
+                        background: "#1F3327",
+                        color: "#F6F4EE",
+                        fontSize: 15,
+                        fontWeight: 600,
+                        cursor: "pointer",
+                    }}
+                >
+                    Reservar
+                </button>
             </div>
         </div>
     );
 }
+
